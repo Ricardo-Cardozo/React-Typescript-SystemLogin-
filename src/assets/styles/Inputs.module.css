@@ -1,0 +1,32 @@
+.input_custom label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.input_custom {
+  width: 600px;
+  margin: 2em 0 2em 0;
+}
+
+.input_custom input[type=text], input[type=email], input[type=password] {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  margin-top: .5em;
+}
+
+.input_custom input[type=submit] {
+  color: #fff;
+  background-color: rgb(50, 161, 50);
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: .5s;
+}
+
+.input_custom input[type=submit]:hover {
+  background-color: green;
+}
