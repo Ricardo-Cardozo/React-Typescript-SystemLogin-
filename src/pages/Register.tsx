@@ -1,8 +1,16 @@
 import Inputs from "../components/Form/Inputs"
 import { useState } from 'react'
+import { useFetch } from "../hooks/useFetch"
 
 const Register = () => {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmpassword: ''
+  })
+
+  const { registerAuth, message } = useFetch()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser({
@@ -11,10 +19,22 @@ const Register = () => {
     })
   }
 
-  console.log(user);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    await registerAuth(
+      `http://localhost:3001/users/register`,
+      "POST",
+      { 'Content-Type': 'application/json' },
+      JSON.stringify(user)
+    )
+
+    setUser({
+      name: '',
+      email: '',
+      password: '',
+      confirmpassword: ''
+    })
   }
 
   return (
@@ -27,7 +47,7 @@ const Register = () => {
           name="name"
           placeholder="Digite seu nome..."
           onChange={handleChange}
-          value={undefined}
+          value={user.name || ''}
         />
         <Inputs
           label="E-mail:"
@@ -35,7 +55,7 @@ const Register = () => {
           name="email"
           placeholder="Digite seu e-mail..."
           onChange={handleChange}
-          value={undefined}
+          value={user.email || ''}
         />
         <Inputs
           label="Digite a senha:"
@@ -43,7 +63,7 @@ const Register = () => {
           name="password"
           placeholder="Digite sua senha..."
           onChange={handleChange}
-          value={undefined}
+          value={user.password || ''}
         />
         <Inputs
           label="Confirme a senha:"
@@ -51,7 +71,7 @@ const Register = () => {
           name="confirmpassword"
           placeholder="Confirme sua senha..."
           onChange={handleChange}
-          value={undefined}
+          value={user.confirmpassword || ''}
         />
         <Inputs
           label={undefined}
@@ -62,6 +82,7 @@ const Register = () => {
           value="Registrar"
         />
       </form>
+      {message && <p>{message}</p>}
     </div>
   )
 }
